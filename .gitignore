@@ -1,0 +1,16 @@
+# dependencies (bun install)
+node_modules
+
+# output
+bin
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
+
+# bun build artifacts
+*.bun-build
+
+# Finder
+.DS_Store

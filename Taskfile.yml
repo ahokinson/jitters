@@ -1,0 +1,44 @@
+version: "3"
+
+vars:
+  BIN: jitters
+  ENTRY: src/index.tsx
+
+tasks:
+  build:
+    deps: [deps]
+    cmds:
+      - bun run build.ts
+
+  install:
+    deps: [build]
+    cmds:
+      - sudo ln -sf {{.ROOT_DIR}}/bin/{{.BIN}} /usr/local/bin/{{.BIN}}
+
+  deps:
+    cmds:
+      - bun install
+
+  check:
+    deps: [deps]
+    cmds:
+      - bun x tsc --noEmit
+
+  lint:
+    deps: [deps]
+    cmds:
+      - bun x biome check src
+
+  format:
+    deps: [deps]
+    cmds:
+      - bun x biome format --write src
+
+  dev:
+    deps: [deps]
+    cmds:
+      - bun run {{.ENTRY}}
+
+  clean:
+    cmds:
+      - rm -rf bin/
